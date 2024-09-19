@@ -5,7 +5,7 @@ import './App.css'
 // 初始化css样式 ：yarn add normalize.css OR npm install normalize.css
 import 'normalize.css'
 // 导入路由
-import routes from "./router";
+import routes from "@/router";
 import {useRoutes} from "react-router-dom";
 
 function App() {

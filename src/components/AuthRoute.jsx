@@ -1,5 +1,12 @@
-const AuthRoute = ()=>{
-    return (<>AuthRoute</>)
+import {getToken} from "@/utils/token";
+import { Navigate } from "react-router-dom"
+
+const AuthRoute = ({children})=>{
+    const token = getToken()
+    if(token){
+        return <>{ children }</>
+    }
+    return <Navigate to={ '/login' } replace />
 }
 
 export default AuthRoute;

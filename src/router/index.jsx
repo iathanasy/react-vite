@@ -1,13 +1,14 @@
-import Login from "../pages/Login/index.jsx";
-import Layout from "../pages/Layout/index.jsx";
+import Login from "@/pages/Login";
+import Layout from "@/pages/Layout/index.jsx";
+import AuthRoute from "@/components/AuthRoute";
 
 const router = [
     {
         path: '/',
-        element: <Layout />
+        element: <AuthRoute><Layout /></AuthRoute>
     },
     {
-        path: 'login',
+        path: '/login',
         element: <Login />
     }
 ]

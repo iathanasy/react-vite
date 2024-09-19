@@ -1,6 +1,7 @@
 // 引入axios yarn add axios
 import axios from 'axios'
-import { getToken } from './token';
+import { getToken, clearToken } from '@/utils/token';
+import {useNavigate} from "react-router-dom";
 
 const request = axios.create({
     baseURL: 'http://geek.itheima.net/v1_0',
@@ -28,6 +29,9 @@ request.interceptors.response.use(function (response) {
     return response.data;
 }, function (error) {
     // 对响应错误做点什么
+    clearToken()
+    const navigate = useNavigate()
+    navigate( '/login' )
     return Promise.reject(error);
 });
 
