@@ -1,9 +1,20 @@
-import { Component } from 'react'
+import {useEffect} from 'react'
+import {getToken} from "@/utils/token.jsx";
+import {useNavigate, useLocation } from "react-router-dom";
 
-class Layout extends Component {
-    render() {
-        return <div className="layout">首页布局</div>
-    }
+
+export default function Layout(){
+    // const navigate = useNavigate();
+    // let location = useLocation();
+    // const token = getToken()
+    //
+    // useEffect(() => {
+    //     if(!token){
+    //         console.log('location',location.pathname)
+    //         navigate('/login?redirect='+location.pathname)
+    //     }
+    // });
+
+    return (<div className="layout">首页布局</div>)
+
 }
-
-export default Layout

@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import {Component, useEffect} from 'react'
 import {Button, Card, Checkbox, Form, Input, message} from 'antd'
 // yarn add sass
 import './index.scss'
@@ -6,7 +6,7 @@ import logo from '@/assets/vite.svg'
 import {login} from "@/apis/user";
 //yarn add react-redux
 import { useDispatch } from 'react-redux'
-import {useLocation} from 'react-router-dom'
+import {useLocation, useNavigate, useSearchParams} from 'react-router-dom'
 import {setToken} from "@/utils/token";
 
 /**
@@ -20,24 +20,33 @@ const fetchLogin = (params) =>{
         dispatch(setToken(res.token))
     }
 }
-class Login extends Component {
-
+export default function Login() {
+    const navigate = useNavigate();
+    let location = useLocation();
+    const [search,setSearch] = useSearchParams()
+    const redirect = search.get('redirect')
     /**
      * 表单注册事件
      * @param values
      * @returns {Promise<void>}
      */
-    onFinish = async (values) => {
-        console.log(values)
+    const onFinish = async (values) => {
+        console.log('location',location.search)
+        console.log('search', redirect)
         const res = await login(values)
-        console.log(res)
         setToken(res.data.token)
         // 跳转到首页
-        location.href = '/'
+        // location.href = '/'
+        useEffect(() => {
+            if(redirect){
+                navigate(redirect)
+            }else{
+                navigate('/')
+            }
+        });
         message.success('登录成功')
     }
-    render() {
-        return (
+    return (
             <div className="login">
                 <Card className="login-container">
                     <img className="login-logo" src={logo} alt=""/>
@@ -50,7 +59,7 @@ class Login extends Component {
                               remember: true,
                         }}
                         validateTrigger={['onChange', 'onBlur']}
-                        onFinish={this.onFinish}
+                        onFinish={onFinish}
                     >
                         <Form.Item name="mobile"
                                    rules={[
@@ -90,7 +99,4 @@ class Login extends Component {
 
             </div>
         )
-    }
 }
-
-export default Login

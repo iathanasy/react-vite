@@ -1,12 +1,13 @@
 import {getToken} from "@/utils/token";
-import { Navigate } from "react-router-dom"
+import {Navigate, useLocation} from "react-router-dom"
 
 const AuthRoute = ({children})=>{
+    let location = useLocation();
     const token = getToken()
     if(token){
         return <>{ children }</>
     }
-    return <Navigate to={ '/login' } replace />
+    return <Navigate to={ '/login?redirect='+location.pathname } replace />
 }
 
 export default AuthRoute;
