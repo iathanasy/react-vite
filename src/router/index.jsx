@@ -4,6 +4,7 @@ import GeekLayout from "@/pages/Layout/index.jsx";
 import {lazy, Suspense} from "react";
 
 const Home = lazy(() => import('@/pages/Home/index.jsx'))
+const Table = lazy(() => import('@/pages/Table/index.jsx'))
 const Article = lazy(() => import('@/pages/Article/index'))
 const Publish = lazy(() => import('@/pages/Publish/index'))
 
@@ -15,6 +16,10 @@ const router = [
             {
                 path: '/',
                 element: <Suspense fallback={'加载中'}><Home /></Suspense>
+            },
+            {
+                path: '/table',
+                element: <Suspense fallback={'加载中'}><Table /></Suspense>
             },
             {
                 path: 'article',

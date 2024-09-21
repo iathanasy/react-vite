@@ -1,6 +1,7 @@
 // 引入axios yarn add axios
 import axios from 'axios'
 import { getToken, clearToken } from '@/utils/token';
+import {message} from "antd";
 
 const request = axios.create({
     baseURL: 'http://geek.itheima.net/v1_0',
@@ -28,7 +29,9 @@ request.interceptors.response.use(function (response) {
     return response.data;
 }, function (error) {
     // 对响应错误做点什么
-    clearToken()
+    // clearToken()
+    console.error(error.message)
+    message.error("请求异常")
     return Promise.reject(error);
 });
 

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { HomeOutlined, DiffOutlined, EditOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons'
-import {Popconfirm, Button, Layout, Menu, theme, Avatar, Popover, Space} from 'antd';
+import { HomeOutlined, DiffOutlined, EditOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined, TableOutlined } from '@ant-design/icons'
+import {Watermark, Popconfirm, Button, Layout, Menu, theme, Avatar, Popover, Space, message} from 'antd';
 const { Header, Sider, Content, Footer } = Layout;
+
+import avatarUrl from '@/assets/react.svg'
 
 import './index.scss'
 import {Outlet, useLocation, useNavigate} from "react-router-dom";
@@ -12,6 +14,11 @@ const items = [
         label: '首页',
         key: '/',
         icon: <HomeOutlined />,
+    },
+    {
+        label: '表格管理',
+        key: '/table',
+        icon: <TableOutlined />,
     },
     {
         label: '文章管理',
@@ -47,6 +54,8 @@ export default function GeekLayout(){
     const onConfirm = () => {
         clearToken();
         navigate( '/login' )
+        // 提示消息
+        message.success('退出成功')
     }
 
     return (
@@ -58,7 +67,7 @@ export default function GeekLayout(){
                     <Menu
                         theme="dark"
                         mode="inline"
-                        defaultSelectedKeys={['/article']}
+                        defaultSelectedKeys={[selectedKey]}
                         selectedKeys={ selectedKey }
                         style={{ height: '100%', borderRight: 0 }}
                         onClick={ onMenuClick }
@@ -85,23 +94,25 @@ export default function GeekLayout(){
                         />
                         <div className="profile">
                             <Popconfirm title={'[' + mobile + ']是否确认退出？'} okText="退出" cancelText="取消" onConfirm={ onConfirm }>
-                                <Avatar size={40} icon={<UserOutlined />}  />
+                                {/*<Avatar size={40}  icon={<UserOutlined />}  />*/}
+                                <Avatar size={40}  src={avatarUrl} alt={mobile} />
                             </Popconfirm>
                         </div>
                     </Header>
-                    <Content
-                        style={{
-                            margin: '24px 16px',
-                            padding: 24,
-                            minHeight: 280,
-                            background: colorBgContainer,
-                            borderRadius: borderRadiusLG,
-                        }}
-                    >
-                        {/* 二级路由出口 */}
-                        <Outlet />
-                    </Content>
-
+                    {/*<Watermark content={['Ant Design', 'Happy Working']}>*/}
+                        <Content
+                            style={{
+                                margin: '24px 16px',
+                                padding: 24,
+                                minHeight: 280,
+                                background: colorBgContainer,
+                                borderRadius: borderRadiusLG,
+                            }}
+                        >
+                            {/* 二级路由出口 */}
+                            <Outlet />
+                        </Content>
+                    {/*</Watermark>*/}
                     <Footer
                         style={{
                             textAlign: 'center',

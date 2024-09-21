@@ -25,6 +25,7 @@ export default function Login() {
     let location = useLocation();
     const [search,setSearch] = useSearchParams()
     const redirect = search.get('redirect')
+    const redirectUri = redirect === null ? '/' : redirect
     /**
      * 表单注册事件
      * @param values
@@ -32,18 +33,14 @@ export default function Login() {
      */
     const onFinish = async (values) => {
         console.log('location',location.search)
-        console.log('search', redirect)
+        console.log('search', redirectUri)
         const res = await login(values)
         setToken(res.data.token)
         // 跳转到首页
         // location.href = '/'
         useEffect(() => {
-            if(redirect){
-                navigate(redirect)
-            }else{
-                navigate('/')
-            }
-        });
+            navigate(redirectUri)
+        },[redirectUri]);
         message.success('登录成功')
     }
     return (
