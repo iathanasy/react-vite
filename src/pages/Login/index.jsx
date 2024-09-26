@@ -37,10 +37,7 @@ export default function Login() {
         const res = await login(values)
         setToken(res.data.token)
         // 跳转到首页
-        // location.href = '/'
-        useEffect(() => {
-            navigate(redirectUri)
-        },[redirectUri]);
+        navigate(redirectUri)
         message.success('登录成功')
     }
     return (
