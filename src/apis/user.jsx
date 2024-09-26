@@ -12,3 +12,14 @@ export const login = (params) =>{
         data: params
     })
 }
+
+/**
+ * 获取用户信息
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const getUserInfo = ()=>{
+    return request({
+        method: 'GET',
+        url: '/user/profile'
+    })
+}

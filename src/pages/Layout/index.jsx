@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { HomeOutlined, DiffOutlined, EditOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined, TableOutlined } from '@ant-design/icons'
 import {Watermark, Popconfirm, Button, Layout, Menu, theme, Avatar, Popover, Space, message} from 'antd';
 const { Header, Sider, Content, Footer } = Layout;
@@ -8,6 +8,7 @@ import avatarUrl from '@/assets/react.svg'
 import './index.scss'
 import {Outlet, useLocation, useNavigate} from "react-router-dom";
 import {clearToken} from "@/utils/token";
+import {getUserInfo, login} from "@/apis/user.jsx";
 
 const items = [
     {
@@ -48,8 +49,15 @@ export default function GeekLayout(){
     const location = useLocation()
     const selectedKey = location.pathname
 
-    const mobile = '123'
-
+    const [profile, setProfile] = useState({})
+    // 获取当前登录用户信息
+    useEffect(() =>{
+          getUserInfo().then(res => {
+            setProfile(res.data)
+        })
+    }, []);
+    const name = profile.name || '匿名'
+    const photo = profile.photo || avatarUrl
     // 确认退出登录 - 点击事件
     const onConfirm = () => {
         clearToken();
@@ -93,9 +101,9 @@ export default function GeekLayout(){
                             }}
                         />
                         <div className="profile">
-                            <Popconfirm title={'[' + mobile + ']是否确认退出？'} okText="退出" cancelText="取消" onConfirm={ onConfirm }>
+                            <Popconfirm title={'[' + name + ']是否确认退出？'} okText="退出" cancelText="取消" onConfirm={ onConfirm }>
                                 {/*<Avatar size={40}  icon={<UserOutlined />}  />*/}
-                                <Avatar size={40}  src={avatarUrl} alt={mobile} />
+                                <Avatar size={40}  src={photo} alt={name} />
                             </Popconfirm>
                         </div>
                     </Header>
