@@ -23,3 +23,15 @@ export const getArticleList = (params)=>{
         params
     })
 }
+
+/**
+ * 删除文章
+ * @param id
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const deleteArticle = (id) =>{
+    return request({
+        method: "DELETE",
+        url: `/mp/articles/${id}`
+    })
+}

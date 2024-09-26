@@ -22,15 +22,20 @@ request.interceptors.request.use(function (config) {
     // 对请求错误做些什么
     return Promise.reject(error);
 });
-
 // 添加响应拦截器
 request.interceptors.response.use(function (response) {
     // 对响应数据做点什么
     return response.data;
 }, function (error) {
-    // 对响应错误做点什么
-    // clearToken()
     console.error(error.message)
+    if (error.response.status === 401) {
+        // token过期
+        clearToken()
+        message.error(error.response.data.message)
+        window.location.href = '/login'
+        return Promise.reject(error);
+    }
+    // 对响应错误做点什么
     message.error("请求异常")
     return Promise.reject(error);
 });
