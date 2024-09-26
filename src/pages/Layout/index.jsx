@@ -9,6 +9,7 @@ import './index.scss'
 import {Outlet, useLocation, useNavigate} from "react-router-dom";
 import {clearToken} from "@/utils/token";
 import {getUserInfo, login} from "@/apis/user.jsx";
+import useUserInfo from "@/hooks/useUserInfo.jsx";
 
 const items = [
     {
@@ -49,13 +50,7 @@ export default function GeekLayout(){
     const location = useLocation()
     const selectedKey = location.pathname
 
-    const [profile, setProfile] = useState({})
-    // 获取当前登录用户信息
-    useEffect(() =>{
-          getUserInfo().then(res => {
-            setProfile(res.data)
-        })
-    }, []);
+    const profile = useUserInfo()
     const name = profile.name || '匿名'
     const photo = profile.photo || avatarUrl
     // 确认退出登录 - 点击事件

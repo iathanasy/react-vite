@@ -1,13 +1,45 @@
 import React, { useState } from 'react';
-import { Radio, Timeline, Col, Row, Statistic  } from 'antd';
+import { Radio, Timeline, Col, Row, Statistic, Descriptions,Avatar   } from 'antd';
+import useUserInfo from "@/hooks/useUserInfo.jsx";
 
 export default function Home(){
     const [mode, setMode] = useState('left');
     const onChange = (e) => {
         setMode(e.target.value);
     };
+    const profile = useUserInfo();
+    const items = [
+        {
+            key: '1',
+            label: 'UserName',
+            children: profile.name,
+        },
+        {
+            key: '2',
+            label: 'Telephone',
+            children: profile.mobile,
+        },
+        {
+            key: '3',
+            label: 'BirthDay',
+            children: profile.birthday,
+        },
+        {
+            key: '4',
+            label: 'Remark',
+            children: profile.intro,
+        },
+        {
+            key: '0',
+            label: 'Photo',
+            children: <Avatar shape="square" src={profile.photo} />,
+        },
+    ];
     return (
         <>
+            <Descriptions title="User Info" items={items} />
+
+            <hr />
             <Radio.Group
                 onChange={onChange}
                 value={mode}
