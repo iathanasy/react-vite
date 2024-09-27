@@ -14,6 +14,7 @@ export default function Article(){
     const navigate = useNavigate()
     const [tableList, setTableList] = useState([])//表格数据
     const [count, setCount] = useState(0) //表格数据总数
+    const [loading, setLoading] = useState(false);
     const channels = useChannels()
 
     const articleStatus = {
@@ -85,8 +86,10 @@ export default function Article(){
 
 
     useEffect(() => {
+        setLoading(true)
         const fetchArticleList = async () => {
             const res = await getArticleList(reqData)
+            setLoading(false)
             setTableList(res.data.results)
             setCount(res.data.total_count)
         }
@@ -184,6 +187,7 @@ export default function Article(){
                     <Table rowKey="id"
                            columns={columns}
                            dataSource={tableList}
+                           loading={loading}
                            pagination={{ position: ['bottomCenter'], current: reqData.page, total: count, pageSize: reqData.per_page, onChange: onPageChange }}/>
                 </Card>
             </div>

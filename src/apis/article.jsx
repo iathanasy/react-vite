@@ -35,3 +35,41 @@ export const deleteArticle = (id) =>{
         url: `/mp/articles/${id}`
     })
 }
+
+/**
+ * 发布文章
+ * @param params
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const publishArticle = (params, draft = false) =>{
+    return request({
+        method: "POST",
+        url: '/mp/articles?draft=' + draft,
+        data: params
+    })
+}
+
+/**
+ * 获取文章
+ * @param id
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export function getArticleById(id) {
+    return request({
+        method: "GET",
+        url: `/mp/articles/${id}`
+    })
+}
+
+/**
+ * 更新文章
+ * @param data
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export function updateArticle(data, draft = false) {
+    return request({
+        method: 'PUT',
+        url: `/mp/articles/${data.id}?draft=` + draft,
+        data
+    })
+}
