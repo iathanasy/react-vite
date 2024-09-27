@@ -1,6 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import { HomeOutlined, DiffOutlined, EditOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined, TableOutlined } from '@ant-design/icons'
-import {Watermark, Popconfirm, Button, Layout, Menu, theme, Avatar, Popover, Space, message} from 'antd';
+import {
+    Watermark,
+    Popconfirm,
+    Button,
+    Layout,
+    Menu,
+    theme,
+    Avatar,
+    Popover,
+    Space,
+    message,
+    Dropdown,
+    Tag,
+    Flex
+} from 'antd';
 const { Header, Sider, Content, Footer } = Layout;
 
 import avatarUrl from '@/assets/react.svg'
@@ -96,10 +110,31 @@ export default function GeekLayout(){
                             }}
                         />
                         <div className="profile">
-                            <Popconfirm title={'[' + name + ']是否确认退出？'} okText="退出" cancelText="取消" onConfirm={ onConfirm }>
-                                {/*<Avatar size={40}  icon={<UserOutlined />}  />*/}
-                                <Avatar size={40}  src={photo} alt={name} />
-                            </Popconfirm>
+                            <Dropdown
+                                menu={{
+                                    items: [
+                                        {
+                                            key: 'logout',
+                                            icon: <LogoutOutlined />,
+                                            label: <a onClick={onConfirm}>退出登陆</a>,
+                                        },
+                                    ],
+                                }}
+                            >
+                                <div>
+                                    <Avatar size={40}  src={photo} alt={name} />
+                                    <span style={{
+                                        marginInlineStart: '8px',
+                                        color: 'rgba(0, 0, 0, 0.45)',
+                                        cursor: 'pointer'
+                                    }}>{name}</span>
+                                </div>
+
+                            </Dropdown>
+                            {/*<Popconfirm title={'[' + name + ']是否确认退出？'} okText="退出" cancelText="取消" onConfirm={ onConfirm }>*/}
+                            {/*    /!*<Avatar size={40}  icon={<UserOutlined />}  />*!/*/}
+                            {/*    <Avatar size={40}  src={photo} alt={name} />*/}
+                            {/*</Popconfirm>*/}
                         </div>
                     </Header>
                     {/*<Watermark content={['Ant Design', 'Happy Working']}>*/}
